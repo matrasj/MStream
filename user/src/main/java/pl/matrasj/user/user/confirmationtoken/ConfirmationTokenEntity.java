@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -22,9 +21,6 @@ public class ConfirmationTokenEntity {
     @Column(name = "create_date")
     @CreationTimestamp
     private LocalDateTime createDate;
-    @Column(name = "last_edit_date")
-    @UpdateTimestamp
-    private LocalDateTime lastEditDate;
     @Column(name = "token")
     private String token;
     @Column(name = "expires_at")

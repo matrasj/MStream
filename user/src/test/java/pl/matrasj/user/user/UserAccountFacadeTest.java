@@ -6,6 +6,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.matrasj.user.user.account.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static reactor.core.publisher.Mono.when;
 
@@ -37,7 +39,9 @@ class UserAccountFacadeTest {
         // When
         UserAccountPayloadRes requestResponse = userAccountFacade.registerAccount(userAccountRequest);
         // Then
-        requestResponse.
+        assertEquals("matrasj", requestResponse.getUsername(), "Invalid username");
+        assertEquals("test.test@gmail.com", requestResponse.getEmail(), "Invalid email");
+        assertNotNull(requestResponse.getConfirmationToken().getToken(), "Token is null");
 
     }
 }
