@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+    <changeSet id="001-create-user-account-table" author="matrasj">
+        <preConditions>
+            <not>
+                <tableExists tableName="user_account"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="user_account">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="first_name" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_name" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="username" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="password" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="phone_number" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_updated" type="timestamp without time zone">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="enabled" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="removed" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
