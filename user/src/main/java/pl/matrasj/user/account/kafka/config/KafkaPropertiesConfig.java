@@ -1,4 +1,4 @@
-package pl.matrasj.user.account.kafka;
+package pl.matrasj.user.account.kafka.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

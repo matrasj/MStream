@@ -1,4 +1,4 @@
 package pl.matrasj.user.account.exception;
 
-public class UserAccountAlreadyExistsException extends RuntimeException{
+public class UserAccountAlreadyExistsException extends RuntimeException {
 }

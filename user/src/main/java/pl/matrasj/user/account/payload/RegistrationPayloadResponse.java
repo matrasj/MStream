@@ -1,4 +1,4 @@
-package pl.matrasj.user.account;
+package pl.matrasj.user.account.payload;
 
 
 import lombok.Builder;
@@ -7,7 +7,7 @@ import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadRes;
 
 @Getter
 @Builder
-public class UserAccountPayloadRes {
+public class RegistrationPayloadResponse {
     private String username;
     private String email;
     private ConfirmationTokenPayloadRes confirmationToken;

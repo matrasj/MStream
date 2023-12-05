@@ -6,6 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.matrasj.user.account.*;
+import pl.matrasj.user.account.UserAccountRepository;
+import pl.matrasj.user.account.kafka.registration.KafkaRegistrationEventProducer;
+import pl.matrasj.user.account.payload.RegistrationPayloadRequest;
+import pl.matrasj.user.account.payload.RegistrationPayloadResponse;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenEntity;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenFactory;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenRepository;
@@ -26,12 +30,14 @@ class UserAccountFacadeTest {
     ConfirmationTokenRepository confirmationTokenRepository;
     @Mock
     ConfirmationTokenFactory confirmationTokenFactory;
+    @Mock
+    KafkaRegistrationEventProducer kafkaRegistrationEventProducer;
 
     @Test
     public void givenUserAccountPayloadRequest_whenRegisteringNewUserAccount_shouldRegisterAccountAndReturnConfirmationToken() {
         // Given
         LocalDateTime now = LocalDateTime.now();
-        UserAccountPayloadReq userAccountRequest = UserAccountPayloadReq.builder()
+        RegistrationPayloadRequest userAccountRequest = RegistrationPayloadRequest.builder()
                 .username("matrasj")
                 .email("test.test@gmail.com")
                 .password("Password123!")
@@ -55,7 +61,7 @@ class UserAccountFacadeTest {
                         .build());
 
         // When
-        UserAccountPayloadRes requestResponse = userAccountFacade.registerAccount(userAccountRequest);
+        RegistrationPayloadResponse requestResponse = userAccountFacade.registerAccount(userAccountRequest);
         // Then
         assertEquals("matrasj", requestResponse.getUsername(), "Invalid username");
         assertEquals("test.test@gmail.com", requestResponse.getEmail(), "Invalid email");
