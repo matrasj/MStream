@@ -9,4 +9,5 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
     <include file="db/001-create-user-account-table.xml" relativeToChangelogFile="false"/>
+    <include file="db/002-create-confirmation-token-table.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

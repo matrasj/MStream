@@ -1,4 +1,4 @@
-package pl.matrasj.user.user.confirmationtoken;
+package pl.matrasj.user.confirmationtoken;
 
 import lombok.Builder;
 import lombok.Getter;

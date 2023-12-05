@@ -1,31 +1,40 @@
-<databaseChangeLog>
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
     <changeSet id="002-create-confirmation-token-table" author="matrasj">
-        <preConditions onFail="MARK_RAN">
+        <preConditions>
             <not>
                 <tableExists tableName="confirmation_token"/>
             </not>
         </preConditions>
-        <changes>
-            <createTable tableName="confirmation_token">
-                <columns>
-                    <column name="id" type="bigint" autoIncrement="true">
-                        <constraints primaryKey="true" nullable="false"/>
-                    </column>
-                    <column name="token" type="VARCHAR">
-                        <constraints nullable="false"/>
-                    </column>
-                    <column name="expires_at" type="timestamp without time zone">
-                        <constraints nullable="false"/>
-                    </column>
-                    <column name="confirmed_at" type="timestamp without time zone"/>
-                    <column name="user_account_id" type="BIGINT">
-                        <constraints nullable="false"
-                                     referencedColumnNames="id"
-                                     referencedTableName="user_account"
-                                     foreignKeyName="fk_confirmation_token_user_account"/>
-                    </column>
-                </columns>
-            </createTable>
-        </changes>
+
+        <createTable tableName="confirmation_token">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expires_at" type="timestamp without time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="confirmed_at" type="timestamp without time zone"/>
+            <column name="create_date" type="timestamp without time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_account_id" type="BIGINT">
+                <constraints nullable="false"
+                             referencedColumnNames="id"
+                             referencedTableName="user_account"
+                             foreignKeyName="fk_confirmation_token_user_account"/>
+            </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

@@ -1,9 +1,9 @@
-package pl.matrasj.user.user.account;
+package pl.matrasj.user.account;
 
 
 import lombok.Builder;
 import lombok.Getter;
-import pl.matrasj.user.user.confirmationtoken.ConfirmationTokenPayloadRes;
+import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadRes;
 
 @Getter
 @Builder

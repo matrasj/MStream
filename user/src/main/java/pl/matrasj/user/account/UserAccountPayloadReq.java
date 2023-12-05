@@ -1,4 +1,4 @@
-package pl.matrasj.user.user.account;
+package pl.matrasj.user.account;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

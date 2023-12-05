@@ -1,8 +1,9 @@
-package pl.matrasj.user.user.account;
+package pl.matrasj.user.account;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,6 +16,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "user_account")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Builder
 public class UserAccountEntity {
     @Id
