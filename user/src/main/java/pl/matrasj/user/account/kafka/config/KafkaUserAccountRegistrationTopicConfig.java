@@ -13,12 +13,11 @@ import org.springframework.kafka.config.TopicBuilder;
 @FieldDefaults(level = AccessLevel.PACKAGE, makeFinal = true)
 public class KafkaUserAccountRegistrationTopicConfig {
     KafkaPropertiesConfig kafkaPropertiesConfig;
-
     @Bean
     public NewTopic createKafkaRegistrationTopic() {
         return TopicBuilder
-                .name(this.kafkaPropertiesConfig.getRegistrationsTopicName())
-                .partitions(2)
+                .name(kafkaPropertiesConfig.getRegistrationsTopicName())
+                .partitions(kafkaPropertiesConfig.getPartitions())
                 .build();
     }
 }

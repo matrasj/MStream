@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 public class KafkaPropertiesConfig {
-    @Value("${kafka.topic.registrations.name}")
+    @Value("${kafka.topics.registration-topic-name}")
     private String registrationsTopicName;
     @Value("${kafka.topic.registrations.partitions}")
     private int partitions;
