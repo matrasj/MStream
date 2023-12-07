@@ -31,4 +31,8 @@ public class ConfirmationTokenEntity {
     private LocalDateTime createDate;
     @Column(name = "user_account_id")
     private Long userAccountId;
+
+    public void confirm() {
+        this.confirmedAt = LocalDateTime.now();
+    }
 }
