@@ -28,7 +28,7 @@ public class MailingServiceFacade {
             helper.setText(
                     MailBodyTemplateFactory.buildTemplateForEmailConfirmation(
                             String.format("%s %s", registrationEventPayload.getFirstname(), registrationEventPayload.getLastname()),
-                            confirmationTokenUrl
+                            String.format("%s?token=%s", confirmationTokenUrl, registrationEventPayload.getConfirmationToken())
                     ), true);
             helper.setTo(registrationEventPayload.getEmail());
             helper.setSubject(SUBJECT);

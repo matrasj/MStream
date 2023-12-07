@@ -45,4 +45,8 @@ public class UserAccountEntity {
     private boolean enabled;
     @Column(name = "removed")
     private boolean removed;
+
+    public void enable() {
+        this.enabled = true;
+    }
 }
