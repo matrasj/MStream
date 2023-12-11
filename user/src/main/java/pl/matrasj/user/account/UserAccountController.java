@@ -24,7 +24,7 @@ public class UserAccountController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userAccountFacade.registerAccount(registrationRequest));
     }
-    
+
     @GetMapping("/confirmation")
     public ResponseEntity<String> confirmAccount(@RequestParam("token") String token) {
         return ResponseEntity.status(HttpStatus.ACCEPTED)

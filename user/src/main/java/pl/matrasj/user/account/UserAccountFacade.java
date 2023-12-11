@@ -17,6 +17,7 @@ import pl.matrasj.user.account.exception.InvalidUsernameException;
 import pl.matrasj.user.account.exception.UserAccountAlreadyExistsException;
 import pl.matrasj.user.account.validators.EmailValidator;
 import pl.matrasj.user.account.validators.UsernameValidator;
+import pl.matrasj.user.authentication.Role;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenEntity;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenFactory;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadRes;
@@ -34,6 +35,7 @@ public class UserAccountFacade {
     ConfirmationTokenFactory confirmationTokenFactory;
     ConfirmationTokenRepository confirmationTokenRepository;
     KafkaRegistrationEventProducer kafkaRegistrationEventProducer;
+
     @Transactional
     public RegistrationPayloadResponse registerAccount(RegistrationPayloadRequest accountPayloadReq) {
         validateRequest(accountPayloadReq);
@@ -82,6 +84,8 @@ public class UserAccountFacade {
                 .createdAt(LocalDateTime.now())
                 .removed(false)
                 .enabled(false)
+                .hasAccessToCourse(false)
+                .role(Role.CUSTOMER)
                 .build();
     }
 
