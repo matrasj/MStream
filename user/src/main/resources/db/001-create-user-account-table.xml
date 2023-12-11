@@ -59,6 +59,14 @@
             <column name="removed" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="true"/>
             </column>
+
+            <column name="has_access_to_course" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="role" type="varchar">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>
