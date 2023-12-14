@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.matrasj.user.account.*;
 import pl.matrasj.user.account.UserAccountRepository;
-import pl.matrasj.user.account.kafka.registration.KafkaRegistrationEventProducer;
+import pl.matrasj.user.account.kafka.KafkaRegistrationEventProducer;
 import pl.matrasj.user.account.payload.RegistrationPayloadRequest;
 import pl.matrasj.user.account.payload.RegistrationPayloadResponse;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenEntity;

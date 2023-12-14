@@ -1,0 +1,13 @@
+package pl.matrasj.mail.newsletter;
+
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.List;
+
+@Getter
+@Builder
+public class NewsletterTopicPayload {
+    private List<UserAccountInformationPayload> users;
+    private NewsletterSendPayloadRequest request;
+}

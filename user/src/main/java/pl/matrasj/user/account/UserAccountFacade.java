@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.matrasj.user.account.kafka.registration.KafkaRegistrationEventProducer;
-import pl.matrasj.user.account.kafka.registration.RegistrationEventPayload;
+import pl.matrasj.user.account.kafka.KafkaRegistrationEventProducer;
+import pl.matrasj.user.account.kafka.RegistrationEventPayload;
 import pl.matrasj.user.account.payload.RegistrationPayloadRequest;
 import pl.matrasj.user.account.payload.RegistrationPayloadResponse;
 import pl.matrasj.user.account.validators.PasswordValidator;
@@ -24,6 +24,7 @@ import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadRes;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.function.Predicate;
 
 
@@ -63,6 +64,10 @@ public class UserAccountFacade {
                 ).build();
     }
 
+    public List<UserAccountEntity> getAllUserAccountsAssignedForNewsletter() {
+        return userAccountRepository.findAllUsersAssignedForNewsletter();
+    }
+
     private void validateRequest(final RegistrationPayloadRequest accountPayloadReq) {
         final Predicate<String> emailValidator = new EmailValidator();
         final Predicate<String> passwordValidator = new PasswordValidator();
@@ -86,6 +91,7 @@ public class UserAccountFacade {
                 .enabled(false)
                 .hasAccessToCourse(false)
                 .role(Role.CUSTOMER)
+                .isAssignedForNewsletter(false)
                 .build();
     }
 

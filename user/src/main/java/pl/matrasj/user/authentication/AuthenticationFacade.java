@@ -1,6 +1,5 @@
 package pl.matrasj.user.authentication;
 
-import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -9,14 +8,14 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import pl.matrasj.user.account.UserAccountEntity;
 import pl.matrasj.user.account.UserAccountRepository;
 import pl.matrasj.user.authentication.exception.InvalidCredentialsException;
+import pl.matrasj.user.authentication.jwt.JwtTokenService;
 import pl.matrasj.user.authentication.payload.AuthenticationPayloadRequest;
 import pl.matrasj.user.authentication.payload.AuthenticationPayloadResponse;
-import pl.matrasj.user.infrastructure.EntityNotFoundException;
+import pl.matrasj.user.shared.EntityNotFoundException;
 
 import java.util.Objects;
 
@@ -53,14 +52,14 @@ public class AuthenticationFacade {
         }
     }
 
-    public Boolean hasPermissionForCourse(String bearerToken) {
-        UserDetails userDetails = userAccountService.loadUserByUsername(jwtTokenService.extractUsernameFromJwtToken(bearerToken));
-        if (!jwtTokenService.isTokenValid(bearerToken, userDetails)) {
+    public Boolean hasPermission(String jwtToken, String permissionName) {
+        UserDetails userDetails = userAccountService.loadUserByUsername(jwtTokenService.extractUsernameFromJwtToken(jwtToken));
+        if (!jwtTokenService.isTokenValid(jwtToken, userDetails)) {
             return false;
         }
 
         return userDetails.getAuthorities()
                 .stream()
-                .anyMatch((grantedAuthority) -> Objects.equals(grantedAuthority.getAuthority(), Permission.COURSE_ACCESS.name()));
+                .anyMatch((grantedAuthority) -> Objects.equals(grantedAuthority.getAuthority(), permissionName));
     }
 }

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.matrasj.user.authentication.payload.AuthenticationPayloadRequest;
 import pl.matrasj.user.authentication.payload.AuthenticationPayloadResponse;
 
-import static com.google.common.net.HttpHeaders.AUTHORIZATION;
-
 @RestController
 @RequestMapping("/api/authentication")
 @RequiredArgsConstructor
@@ -27,8 +25,14 @@ public class AuthenticationController {
 
     @GetMapping("/permission-for-course")
     @PreAuthorize("hasAuthority('COURSE_ACCESS')")
-    public ResponseEntity<Boolean> hasPermissionForCourse(@RequestHeader(name = "Authorization") String token) {
+    public ResponseEntity<Boolean> hasPermissionForCourse(@RequestHeader(name = "Authorization") String bearerToken) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(authenticationFacade.hasPermissionForCourse(token.substring(7)));
+                .body(authenticationFacade.hasPermission(bearerToken.substring(7), Permission.COURSE_ACCESS.name()));
+    }
+
+    @GetMapping("/is-admin")
+    public ResponseEntity<Boolean> isAdmin(@RequestHeader(name = "Authorization") String bearerToken) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(authenticationFacade.hasPermission(bearerToken.substring(7), String.format("ROLE_%s", Role.ADMIN.name())));
     }
 }

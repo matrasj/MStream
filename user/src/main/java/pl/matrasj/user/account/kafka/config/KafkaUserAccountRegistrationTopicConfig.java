@@ -10,7 +10,7 @@ import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PACKAGE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class KafkaUserAccountRegistrationTopicConfig {
     KafkaPropertiesConfig kafkaPropertiesConfig;
     @Bean

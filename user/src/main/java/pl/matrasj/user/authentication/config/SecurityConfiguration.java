@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pl.matrasj.user.authentication.filter.JwtAuthenticationFilter;
+import pl.matrasj.user.authentication.jwt.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/user-account/registration").permitAll()
                         .requestMatchers("/api/user-account/confirmation").permitAll()
                         .requestMatchers("/api/authentication/login").permitAll()
+                        .requestMatchers("/api/authentication/is-admin").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

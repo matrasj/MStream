@@ -61,12 +61,16 @@ public class UserAccountEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "is_assigned_for_newsletter")
+    private Boolean isAssignedForNewsletter;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         if ((Objects.equals(role, Role.CUSTOMER) && hasAccessToCourse) || Objects.equals(role, Role.ADMIN)) {
             authorities.add(new SimpleGrantedAuthority(Permission.COURSE_ACCESS.name()));
         }
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
         return authorities;
     }
 

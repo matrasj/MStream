@@ -1,0 +1,14 @@
+package pl.matrasj.newsletter.kafka.config;
+
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@Getter
+public class KafkaPropertiesConfig {
+    @Value("${kafka.topics.newsletter-topic-name}")
+    private String newsletterTopicName;
+    @Value("${kafka.topic.newsletter.partitions}")
+    private int partitions;
+}

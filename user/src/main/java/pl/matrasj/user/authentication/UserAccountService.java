@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.matrasj.user.account.UserAccountRepository;
-import pl.matrasj.user.infrastructure.EntityNotFoundException;
+import pl.matrasj.user.shared.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor

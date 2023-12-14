@@ -9,7 +9,7 @@ import pl.matrasj.user.account.UserAccountEntity;
 import pl.matrasj.user.account.UserAccountRepository;
 import pl.matrasj.user.confirmationtoken.exception.ConfirmationTokenAlreadyConfirmedException;
 import pl.matrasj.user.confirmationtoken.exception.ConfirmationTokenAlreadyExpiredException;
-import pl.matrasj.user.infrastructure.EntityNotFoundException;
+import pl.matrasj.user.shared.EntityNotFoundException;
 
 import java.time.LocalDateTime;
 
