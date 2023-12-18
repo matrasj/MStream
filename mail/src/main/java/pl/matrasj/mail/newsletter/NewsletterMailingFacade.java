@@ -15,7 +15,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class NewsletterMailingFacade {
-    private static final String SUBJECT = "Account confirmation";
     private final JavaMailSender javaMailSender;
     @Value("${email.properties.our-email}")
     private String ourEmail;
@@ -26,12 +25,10 @@ public class NewsletterMailingFacade {
                 try {
                     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-                    helper.setText(
-                            NewsletterMailBodyTemplateFactory.buildTemplate(
-                                    String.format("%s %s", user.getFirstname(), user.getLastname())
-                            ), true);
+                    helper.setText(newsletterRequest.getEmailContent()
+                            .replace("{{userFirstnameWithLastname}}", String.format("%s %s", user.getFirstname(), user.getLastname())), true);
                     helper.setTo(user.getEmail());
-                    helper.setSubject(SUBJECT);
+                    helper.setSubject(newsletterRequest.getMailSubject());
                     helper.setFrom(ourEmail);
                     javaMailSender.send(mimeMessage);
                 } catch (MessagingException messagingException) {
