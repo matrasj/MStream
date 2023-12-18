@@ -11,7 +11,6 @@ public class RegistrationEventPayload {
     private String firstname;
     private String lastname;
     private String email;
-    private String username;
     private String confirmationToken;
     private LocalDateTime expirationTime;
 }

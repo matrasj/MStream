@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pl.matrasj.user.authentication.jwt.JwtTokenService;
 
 import java.io.IOException;
 
@@ -28,7 +27,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().contains("/api/authentication")) {
+        if (request.getServletPath().contains("/api/authentication")
+                || request.getServletPath().contains("/api/user-account/registration")
+                || request.getServletPath().contains("/api/user-account/confirmation")
+        )
+        {
             filterChain.doFilter(request, response);
             return;
         }

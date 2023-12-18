@@ -38,7 +38,6 @@ class UserAccountFacadeTest {
         // Given
         LocalDateTime now = LocalDateTime.now();
         RegistrationPayloadRequest userAccountRequest = RegistrationPayloadRequest.builder()
-                .username("matrasj")
                 .email("test.test@gmail.com")
                 .password("Password123!")
                 .firstname("John")
@@ -47,7 +46,6 @@ class UserAccountFacadeTest {
                 .build();
         when(userAccountRepository.save(any()))
                 .thenReturn(UserAccountEntity.builder()
-                .username("matrasj")
                 .email("test.test@gmail.com")
                 .password("Password123!")
                 .firstname("John")
@@ -63,7 +61,6 @@ class UserAccountFacadeTest {
         // When
         RegistrationPayloadResponse requestResponse = userAccountFacade.registerAccount(userAccountRequest);
         // Then
-        assertEquals("matrasj", requestResponse.getUsername(), "Invalid username");
         assertEquals("test.test@gmail.com", requestResponse.getEmail(), "Invalid email");
         assertEquals(requestResponse.getConfirmationToken().getToken(), "1234-1234", "Invalid token");
         assertEquals(requestResponse.getConfirmationToken().getExpiresAt(), now, "Invalid expiration date");

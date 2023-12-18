@@ -36,8 +36,6 @@ public class UserAccountEntity implements UserDetails {
     private String firstname;
     @Column(name = "last_name")
     private String lastname;
-    @Column(name = "username")
-    private String username;
     @Column(name = "password")
     private String password;
     @Column(name = "email")

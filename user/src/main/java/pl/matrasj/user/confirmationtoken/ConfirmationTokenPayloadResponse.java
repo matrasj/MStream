@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class ConfirmationTokenPayloadRes {
+public class ConfirmationTokenPayloadResponse {
     private String token;
     private LocalDateTime expiresAt;
 }

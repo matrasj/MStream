@@ -13,14 +13,12 @@ import pl.matrasj.user.account.payload.RegistrationPayloadResponse;
 import pl.matrasj.user.account.validators.PasswordValidator;
 import pl.matrasj.user.account.exception.InvalidEmailException;
 import pl.matrasj.user.account.exception.InvalidPasswordException;
-import pl.matrasj.user.account.exception.InvalidUsernameException;
 import pl.matrasj.user.account.exception.UserAccountAlreadyExistsException;
 import pl.matrasj.user.account.validators.EmailValidator;
-import pl.matrasj.user.account.validators.UsernameValidator;
 import pl.matrasj.user.authentication.Role;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenEntity;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenFactory;
-import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadRes;
+import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadResponse;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenRepository;
 
 import java.time.LocalDateTime;
@@ -55,9 +53,8 @@ public class UserAccountFacade {
 
         return RegistrationPayloadResponse.builder()
                 .email(createdAccount.getEmail())
-                .username(createdAccount.getUsername())
                 .confirmationToken(
-                        ConfirmationTokenPayloadRes.builder()
+                        ConfirmationTokenPayloadResponse.builder()
                                 .token(createdConfirmationToken.getToken())
                                 .expiresAt(createdConfirmationToken.getExpiresAt())
                                 .build()
@@ -71,11 +68,9 @@ public class UserAccountFacade {
     private void validateRequest(final RegistrationPayloadRequest accountPayloadReq) {
         final Predicate<String> emailValidator = new EmailValidator();
         final Predicate<String> passwordValidator = new PasswordValidator();
-        final Predicate<String> usernameValidator = new UsernameValidator();
 
         if (!emailValidator.test(accountPayloadReq.getEmail())) throw new InvalidEmailException();
         if (!passwordValidator.test(accountPayloadReq.getEmail())) throw new InvalidPasswordException();
-        if (!usernameValidator.test(accountPayloadReq.getEmail())) throw new InvalidUsernameException();
     }
 
     private UserAccountEntity buildEntityFromRequest(final RegistrationPayloadRequest req) {
@@ -83,7 +78,6 @@ public class UserAccountFacade {
                 .firstname(req.getFirstname())
                 .lastname(req.getLastname())
                 .phoneNumber(req.getPhoneNumber())
-                .username(req.getUsername())
                 .password(new BCryptPasswordEncoder().encode(req.getPassword()))
                 .email(req.getEmail())
                 .createdAt(LocalDateTime.now())
@@ -100,7 +94,6 @@ public class UserAccountFacade {
                 .firstname(userAccount.getFirstname())
                 .lastname(userAccount.getLastname())
                 .email(userAccount.getEmail())
-                .username(userAccount.getUsername())
                 .confirmationToken(confirmationToken.getToken())
                 .expirationTime(confirmationToken.getExpiresAt())
                 .build();
