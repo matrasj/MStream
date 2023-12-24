@@ -1,5 +1,6 @@
 package pl.matrasj.user.authentication;
 
+import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -43,9 +44,12 @@ public class AuthenticationFacade {
             throw new InvalidCredentialsException();
         }
 
+        String jwtToken = jwtTokenService.generateJwtToken(userAccount);
         if (authentication.isAuthenticated()) {
             return AuthenticationPayloadResponse.builder()
-                    .jwtToken(jwtTokenService.generateJwtToken(userAccount))
+                    .jwtToken(jwtToken)
+                    .expiresAt(jwtTokenService.extractClaim(jwtToken, Claims::getExpiration))
+                    .email(jwtTokenService.extractClaim(jwtToken, Claims::getSubject))
                     .build();
         } else {
             throw new InvalidCredentialsException();

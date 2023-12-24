@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+    <changeSet id="004-create-quiz-question-table" author="matrasj">
+        <preConditions>
+            <not>
+                <tableExists tableName="quiz_question"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="quiz_question">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="content" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quiz_category_id" type="bigint">
+                <constraints
+                    nullable="false"
+                    foreignKeyName="fk_quiz_question_quiz_category"
+                    referencedTableName="quiz_category"
+                    referencedColumnNames="id"
+                />
+            </column>
+
+            <column name="active" type="boolean" defaultValueBoolean="true"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
