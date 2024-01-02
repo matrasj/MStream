@@ -1,5 +1,7 @@
 package pl.matrasj.quiz.quizquestion;
 
+import pl.matrasj.quiz.quizquestion.dto.QuizQuestionDto;
+import pl.matrasj.quiz.quizquestion.dto.QuizQuestionWithInfoAboutCorrectAnswersDto;
 import pl.matrasj.quiz.quizquestionanswer.QuizQuestionAnswerMapper;
 
 import java.util.List;
@@ -18,6 +20,21 @@ public class QuizQuestionMapper {
         return quizQuestions
                 .stream()
                 .map(QuizQuestionMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public static QuizQuestionWithInfoAboutCorrectAnswersDto toDtoWithCorrectInfo(QuizQuestionEntity quizQuestionEntity) {
+        return QuizQuestionWithInfoAboutCorrectAnswersDto.builder()
+                .id(quizQuestionEntity.getId())
+                .content(quizQuestionEntity.getContent())
+                .answers(QuizQuestionAnswerMapper.toDtoWithCorrectInfo(quizQuestionEntity.getAnswers()))
+                .build();
+    }
+
+    public static List<QuizQuestionWithInfoAboutCorrectAnswersDto> toDtoWithCorrectInfo(List<QuizQuestionEntity> quizQuestions) {
+        return quizQuestions
+                .stream()
+                .map(QuizQuestionMapper::toDtoWithCorrectInfo)
                 .collect(Collectors.toList());
     }
 }

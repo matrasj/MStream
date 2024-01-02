@@ -1,19 +1,16 @@
-package pl.matrasj.quiz.quizquestion;
+package pl.matrasj.quiz.quizquestionanswer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.matrasj.quiz.quizquestionanswer.QuizQuestionAnswerDto;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QuizQuestionDto {
+public class QuizQuestionAnswerWithCorrectInfoDto {
     private Long id;
     private String content;
-    private List<QuizQuestionAnswerDto> answers;
+    private boolean correct;
 }

@@ -1,4 +1,4 @@
-package pl.matrasj.quiz.quizquestion;
+package pl.matrasj.quiz.quizquestion.payload;
 
 import java.util.List;
 

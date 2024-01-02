@@ -1,17 +1,17 @@
-package pl.matrasj.quiz.quizquestionanswer;
-
+package pl.matrasj.quiz.shared;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QuizQuestionAnswerDto {
-    private Long id;
-    private String content;
-    private boolean correct;
+public class ListDto<T> {
+    private List<T> items;
+    private Long totalCount;
 }
