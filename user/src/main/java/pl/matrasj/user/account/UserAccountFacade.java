@@ -20,6 +20,7 @@ import pl.matrasj.user.confirmationtoken.ConfirmationTokenEntity;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenFactory;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadResponse;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenRepository;
+import pl.matrasj.user.shared.EntityNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -63,6 +64,10 @@ public class UserAccountFacade {
 
     public List<UserAccountEntity> getAllUserAccountsAssignedForNewsletter() {
         return userAccountRepository.findAllUsersAssignedForNewsletter();
+    }
+
+    public UserAccountEntity findUserAccountByEmail(String email) {
+        return userAccountRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
     }
 
     private void validateRequest(final RegistrationPayloadRequest accountPayloadReq) {

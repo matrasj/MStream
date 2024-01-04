@@ -30,6 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (request.getServletPath().contains("/api/authentication")
                 || request.getServletPath().contains("/api/user-account/registration")
                 || request.getServletPath().contains("/api/user-account/confirmation")
+                || request.getServletPath().contains("/api/user-account/email")
         )
         {
             filterChain.doFilter(request, response);

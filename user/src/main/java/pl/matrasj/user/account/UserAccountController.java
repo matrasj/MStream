@@ -23,6 +23,7 @@ import java.util.List;
 public class UserAccountController {
     UserAccountFacade userAccountFacade;
     ConfirmationTokenFacade confirmationTokenFacade;
+
     @PostMapping("/registration")
     public ResponseEntity<RegistrationPayloadResponse> registerAccount(@RequestBody @Valid RegistrationPayloadRequest registrationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -41,5 +42,13 @@ public class UserAccountController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(UserAccountInformationMapper.toUserAccountInformationPayload(
                                 userAccountFacade.getAllUserAccountsAssignedForNewsletter()));
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserAccountInformationPayload> getUserAccountInformationByEmail(@PathVariable String email) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(UserAccountInformationMapper.toUserAccountInformationPayload(
+                        userAccountFacade.findUserAccountByEmail(email)
+                ));
     }
 }
