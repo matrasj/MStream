@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/user-account/registration").permitAll()
                         .requestMatchers("/api/user-account/confirmation").permitAll()
                         .requestMatchers("/api/user-account/email/**").permitAll() // TODO: should be authetnciated
+                        .requestMatchers("/api/user-account/avatar").permitAll() // TODO: should be authetnciated
                         .requestMatchers("/api/authentication/login").permitAll()
                         .requestMatchers("/api/authentication/is-admin").permitAll()
                         .anyRequest().authenticated()
