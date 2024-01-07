@@ -1,10 +1,7 @@
 package pl.matrasj.user.account;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -52,15 +49,17 @@ public class UserAccountEntity implements UserDetails {
     private boolean enabled;
     @Column(name = "removed")
     private boolean removed;
-
     @Column(name = "has_access_to_course")
     private boolean hasAccessToCourse;
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
-
     @Column(name = "is_assigned_for_newsletter")
     private Boolean isAssignedForNewsletter;
+
+    @Column(name = "avatar_path_img")
+    @Setter
+    private String avatarPathImg;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

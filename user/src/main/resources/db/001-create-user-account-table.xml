@@ -67,6 +67,8 @@
             <column name="is_assigned_for_newsletter" defaultValueBoolean="false" type="boolean">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="avatar_path_img" type="varchar"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

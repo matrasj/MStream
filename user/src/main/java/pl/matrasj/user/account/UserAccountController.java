@@ -14,6 +14,7 @@ import pl.matrasj.user.account.payload.RegistrationPayloadRequest;
 import pl.matrasj.user.account.payload.RegistrationPayloadResponse;
 import pl.matrasj.user.account.payload.UserAccountInformationPayload;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenFacade;
+import pl.matrasj.user.infrastructure.FileSaver;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +26,6 @@ import java.util.List;
 public class UserAccountController {
     UserAccountFacade userAccountFacade;
     ConfirmationTokenFacade confirmationTokenFacade;
-    FileSaver fileSaver;
     @PostMapping("/registration")
     public ResponseEntity<RegistrationPayloadResponse> registerAccount(@RequestBody @Valid RegistrationPayloadRequest registrationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -54,22 +54,10 @@ public class UserAccountController {
                 ));
     }
 
-    @PostMapping("/avatar")
-    public ResponseEntity<UserAccountInformationPayload> changeAvatar(@RequestPart("file") MultipartFile file) {
-        try {
-            // Generate a unique file name or use the original file name
-            String fileName = "avatar_" + System.currentTimeMillis() + "_" + file.getOriginalFilename();
-
-            // Save the file to the avatars directory
-            fileSaver.saveAvatar(file.getBytes(), fileName);
-
-            // Handle any other logic, e.g., update user profile with the file name
-
-            return ResponseEntity.status(HttpStatus.OK).body(UserAccountInformationPayload.builder().build());
-        } catch (IOException e) {
-            // Handle the exception (e.g., log it or return an error response)
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(UserAccountInformationPayload.builder().build());
-        }
+    @PostMapping("/email/{email}/avatar")
+    public ResponseEntity<UserAccountInformationPayload> changeAvatar(@RequestPart("file") MultipartFile file,
+                                                                      @PathVariable String email) throws IOException {
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(userAccountFacade.changeAvatar(email, file));
     }
 }

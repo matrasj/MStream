@@ -6,10 +6,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import pl.matrasj.user.account.kafka.KafkaRegistrationEventProducer;
 import pl.matrasj.user.account.kafka.RegistrationEventPayload;
+import pl.matrasj.user.account.mapper.UserAccountInformationMapper;
 import pl.matrasj.user.account.payload.RegistrationPayloadRequest;
 import pl.matrasj.user.account.payload.RegistrationPayloadResponse;
+import pl.matrasj.user.account.payload.UserAccountInformationPayload;
 import pl.matrasj.user.account.validators.PasswordValidator;
 import pl.matrasj.user.account.exception.InvalidEmailException;
 import pl.matrasj.user.account.exception.InvalidPasswordException;
@@ -20,8 +23,10 @@ import pl.matrasj.user.confirmationtoken.ConfirmationTokenEntity;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenFactory;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenPayloadResponse;
 import pl.matrasj.user.confirmationtoken.ConfirmationTokenRepository;
+import pl.matrasj.user.infrastructure.FileSaver;
 import pl.matrasj.user.shared.EntityNotFoundException;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Predicate;
@@ -31,10 +36,12 @@ import java.util.function.Predicate;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserAccountFacade {
+    private static final String AVATAR_UPLOAD_DIR = "C://avatars";
     UserAccountRepository userAccountRepository;
     ConfirmationTokenFactory confirmationTokenFactory;
     ConfirmationTokenRepository confirmationTokenRepository;
     KafkaRegistrationEventProducer kafkaRegistrationEventProducer;
+    FileSaver fileSaver;
 
     @Transactional
     public RegistrationPayloadResponse registerAccount(RegistrationPayloadRequest accountPayloadReq) {
@@ -68,6 +75,16 @@ public class UserAccountFacade {
 
     public UserAccountEntity findUserAccountByEmail(String email) {
         return userAccountRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Transactional
+    public UserAccountInformationPayload changeAvatar(String email, MultipartFile file) throws IOException {
+        UserAccountEntity userAccount = this.findUserAccountByEmail(email);
+        String fileName = "avatar_" + System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+        String pathToAvatarImg = fileSaver.saveFile(file.getBytes(), AVATAR_UPLOAD_DIR, fileName);
+        userAccount.setAvatarPathImg(pathToAvatarImg);
+        return UserAccountInformationMapper.toUserAccountInformationPayload(userAccount);
     }
 
     private void validateRequest(final RegistrationPayloadRequest accountPayloadReq) {
