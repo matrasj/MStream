@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import pl.matrasj.user.authentication.exception.NoPermissionToResourceException;
 
 import java.util.Map;
 
@@ -22,6 +23,14 @@ public class GlobalExceptionHandler {
         return errorMap;
     }
 
+    @ExceptionHandler(NoPermissionToResourceException.class)
+    public ResponseEntity<ExceptionPayload> handleNoPermissionException(RuntimeException exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ExceptionPayload.builder()
+                        .message(exception.getClass().getSimpleName())
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .build());
+    }
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionPayload> handleException(RuntimeException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

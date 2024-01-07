@@ -66,4 +66,12 @@ public class AuthenticationFacade {
                 .stream()
                 .anyMatch((grantedAuthority) -> Objects.equals(grantedAuthority.getAuthority(), permissionName));
     }
+
+    public boolean isTokenValidAndIsEmailSame(String jwtToken, String email) {
+        if (jwtToken == null || email == null) return false;
+        String emailFromToken = jwtTokenService.extractUsernameFromJwtToken(jwtToken);
+        if (!Objects.equals(emailFromToken, email)) return false;
+        UserDetails userDetails = userAccountService.loadUserByUsername(emailFromToken);
+        return jwtTokenService.isTokenValid(jwtToken, userDetails);
+    }
 }

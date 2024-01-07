@@ -79,11 +79,21 @@ public class UserAccountFacade {
 
     @Transactional
     public UserAccountInformationPayload changeAvatar(String email, MultipartFile file) throws IOException {
-        UserAccountEntity userAccount = this.findUserAccountByEmail(email);
+        UserAccountEntity userAccount = findUserAccountByEmail(email);
         String fileName = "avatar_" + System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
         String pathToAvatarImg = fileSaver.saveFile(file.getBytes(), AVATAR_UPLOAD_DIR, fileName);
         userAccount.setAvatarPathImg(pathToAvatarImg);
+        return UserAccountInformationMapper.toUserAccountInformationPayload(userAccount);
+    }
+
+    @Transactional
+    public UserAccountInformationPayload updatePersonalData(String email, UserAccountInformationPayload updatedData) {
+        UserAccountEntity userAccount = findUserAccountByEmail(email);
+
+        userAccount.setFirstname(updatedData.getFirstname());
+        userAccount.setLastname(updatedData.getLastname());
+        userAccount.setPhoneNumber(updatedData.getPhoneNumber());
         return UserAccountInformationMapper.toUserAccountInformationPayload(userAccount);
     }
 

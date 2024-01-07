@@ -26,6 +26,7 @@ public class UserAccountInformationMapper {
                 .firstname(userAccount.getFirstname())
                 .lastname(userAccount.getLastname())
                 .email(userAccount.getEmail())
+                .phoneNumber(userAccount.getPhoneNumber())
                 .avatarImg(avatarImg)
                 .build();
     }

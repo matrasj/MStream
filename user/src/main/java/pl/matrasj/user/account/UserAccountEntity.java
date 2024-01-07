@@ -23,6 +23,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class UserAccountEntity implements UserDetails {
     @Id
@@ -58,7 +59,6 @@ public class UserAccountEntity implements UserDetails {
     private Boolean isAssignedForNewsletter;
 
     @Column(name = "avatar_path_img")
-    @Setter
     private String avatarPathImg;
 
     @Override

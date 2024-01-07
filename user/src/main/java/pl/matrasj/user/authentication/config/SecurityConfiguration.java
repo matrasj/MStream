@@ -30,12 +30,7 @@ public class SecurityConfiguration {
         http
                 .cors((httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource())))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/user-account/registration").permitAll()
-                        .requestMatchers("/api/user-account/confirmation").permitAll()
-                        .requestMatchers("/api/user-account/email/**").permitAll() // TODO: should be authetnciated
-                        .requestMatchers("/api/user-account/avatar").permitAll() // TODO: should be authetnciated
-                        .requestMatchers("/api/authentication/login").permitAll()
-                        .requestMatchers("/api/authentication/is-admin").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
