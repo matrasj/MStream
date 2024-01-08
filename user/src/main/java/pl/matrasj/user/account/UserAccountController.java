@@ -82,7 +82,16 @@ public class UserAccountController {
             return ResponseEntity.status(HttpStatus.ACCEPTED)
                     .body(userAccountFacade.updatePersonalData(email, updatedData));
         } throw new NoPermissionToResourceException();
+    }
 
+    @PatchMapping("/newsletter/email/{email}")
+    public ResponseEntity<UserAccountInformationPayload> toggleNewsletterActivity(@PathVariable String email,
+                                                                                  @RequestHeader(value = HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String jwtToken = extractBearerToken(authorizationHeader);
+        if (authenticationFacade.isTokenValidAndIsEmailSame(jwtToken, email)) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(userAccountFacade.toggleNewsletterActivity(email));
+        } throw new NoPermissionToResourceException();
     }
 
     private String extractBearerToken(String authorizationHeader) {

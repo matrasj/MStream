@@ -97,6 +97,14 @@ public class UserAccountFacade {
         return UserAccountInformationMapper.toUserAccountInformationPayload(userAccount);
     }
 
+    @Transactional
+    public UserAccountInformationPayload toggleNewsletterActivity(String email) {
+        UserAccountEntity userAccount = findUserAccountByEmail(email);
+
+        userAccount.setIsAssignedForNewsletter(!userAccount.getIsAssignedForNewsletter());
+        return UserAccountInformationMapper.toUserAccountInformationPayload(userAccount);
+    }
+
     private void validateRequest(final RegistrationPayloadRequest accountPayloadReq) {
         final Predicate<String> emailValidator = new EmailValidator();
         final Predicate<String> passwordValidator = new PasswordValidator();

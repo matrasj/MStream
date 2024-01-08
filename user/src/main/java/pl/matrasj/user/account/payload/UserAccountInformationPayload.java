@@ -11,4 +11,5 @@ public class UserAccountInformationPayload {
     private String lastname;
     private String phoneNumber;
     private String avatarImg;
+    private Boolean isAssignedForNewsletter;
 }
