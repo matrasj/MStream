@@ -94,6 +94,13 @@ public class UserAccountController {
         } throw new NoPermissionToResourceException();
     }
 
+    @GetMapping("/is-admin")
+    public ResponseEntity<Boolean> isAdmin(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String jwtToken = extractBearerToken(authorizationHeader);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(authenticationFacade.isAdmin(jwtToken));
+    }
+
     private String extractBearerToken(String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             return authorizationHeader.substring(7);

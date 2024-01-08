@@ -57,10 +57,8 @@ public class UserAccountEntity implements UserDetails {
     private Role role;
     @Column(name = "is_assigned_for_newsletter")
     private Boolean isAssignedForNewsletter;
-
     @Column(name = "avatar_path_img")
     private String avatarPathImg;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -80,22 +78,18 @@ public class UserAccountEntity implements UserDetails {
     public String getUsername() {
         return this.email;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return this.enabled;
     }
-
     @Override
     public boolean isAccountNonLocked() {
         return this.enabled;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {
         return this.enabled;
     }
-
     @Override
     public boolean isEnabled() {
         return this.enabled;

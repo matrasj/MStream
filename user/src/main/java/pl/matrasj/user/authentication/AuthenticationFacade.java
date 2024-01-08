@@ -74,4 +74,11 @@ public class AuthenticationFacade {
         UserDetails userDetails = userAccountService.loadUserByUsername(emailFromToken);
         return jwtTokenService.isTokenValid(jwtToken, userDetails);
     }
+
+    public boolean isAdmin(String jwtToken) {
+        if (jwtToken == null) return false;
+        String emailFromToken = jwtTokenService.extractUsernameFromJwtToken(jwtToken);
+        UserDetails userDetails = userAccountService.loadUserByUsername(emailFromToken);
+        return jwtTokenService.isTokenValid(jwtToken, userDetails) && hasPermission(jwtToken, "ROLE_ADMIN");
+    }
 }

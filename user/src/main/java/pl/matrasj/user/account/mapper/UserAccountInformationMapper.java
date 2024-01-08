@@ -27,8 +27,9 @@ public class UserAccountInformationMapper {
                 .lastname(userAccount.getLastname())
                 .email(userAccount.getEmail())
                 .phoneNumber(userAccount.getPhoneNumber())
-                .avatarImg(avatarImg)
+                .role(userAccount.getRole())
                 .isAssignedForNewsletter(userAccount.getIsAssignedForNewsletter())
+                .avatarImg(avatarImg)
                 .build();
     }
 
