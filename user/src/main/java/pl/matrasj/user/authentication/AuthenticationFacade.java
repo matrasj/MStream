@@ -49,7 +49,8 @@ public class AuthenticationFacade {
             return AuthenticationPayloadResponse.builder()
                     .jwtToken(jwtToken)
                     .expiresAt(jwtTokenService.extractClaim(jwtToken, Claims::getExpiration))
-                    .email(jwtTokenService.extractClaim(jwtToken, Claims::getSubject))
+                    .email(userAccount.getEmail())
+                    .role(userAccount.getRole())
                     .build();
         } else {
             throw new InvalidCredentialsException();
